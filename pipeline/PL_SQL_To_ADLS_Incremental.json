@@ -17,23 +17,18 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
+						"sqlReaderQuery": {
+							"value": "@concat(\n'SELECT LastProcessedID\nFROM dbo.WatermarkTable\nWHERE TableSchema = ''',\npipeline().parameters.PL_P_SchemaName,\n''' AND TableName = ''',\npipeline().parameters.PL_P_TableName,\n''''\n)",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "LS_SQLServer_SHIR",
-						"type": "DatasetReference",
-						"parameters": {
-							"ds_SchemaName": {
-								"value": "@pipeline().parameters.PL_P_SchemaName",
-								"type": "Expression"
-							},
-							"ds_Tablename": {
-								"value": "@pipeline().parameters.PL_P_TableName",
-								"type": "Expression"
-							}
-						}
-					}
+						"referenceName": "DS_SQL_Metadata_for_WatermarkTable",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
 				}
 			}
 		],
