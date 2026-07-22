@@ -1,0 +1,15 @@
+{
+	"name": "adfvisionboardproject",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "southeastasia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "e1f47b83-89ba-4df9-9716-f14fe7f52e54",
+		"tenantId": "efcd8864-c241-4ef6-9204-f99abec6377d"
+	}
+}

@@ -1,0 +1,21 @@
+{
+	"name": "LS_SQLServer_SHIR",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"server": "DARKMOON",
+			"database": "AdventureWorks2019",
+			"encrypt": "optional",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "sa",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJhYmJiNjVlYy04NzdjLTQxOGItYWQ5Mi03OWE1MGIyY2Y4NmEiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "pratheeshlaptop",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

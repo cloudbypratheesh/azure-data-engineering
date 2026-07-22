@@ -1,0 +1,67 @@
+{
+	"name": "PL_SQL_To_ADLS_Incremental",
+	"properties": {
+		"activities": [
+			{
+				"name": "LKP_GetWatermark",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "LS_SQLServer_SHIR",
+						"type": "DatasetReference",
+						"parameters": {
+							"ds_SchemaName": {
+								"value": "@pipeline().parameters.PL_P_SchemaName",
+								"type": "Expression"
+							},
+							"ds_Tablename": {
+								"value": "@pipeline().parameters.PL_P_TableName",
+								"type": "Expression"
+							}
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"PL_P_SchemaName": {
+				"type": "string"
+			},
+			"PL_P_TableName": {
+				"type": "string"
+			},
+			"PL_P_ContainerName": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"PL_V_LastProcessedID": {
+				"type": "String"
+			},
+			"PL_V_MaxID": {
+				"type": "String"
+			},
+			"PL_V_FolderPath": {
+				"type": "String"
+			},
+			"PL_V_FileName": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}

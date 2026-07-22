@@ -1,0 +1,34 @@
+{
+	"name": "DS_Binary_Archive_SINK",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_blob_dev_input_files",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"ARC_FolderName": {
+				"type": "string"
+			},
+			"ARC_FileName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().ARC_FileName",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().ARC_FolderName",
+					"type": "Expression"
+				},
+				"container": "files"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
