@@ -1,0 +1,17 @@
+{
+	"name": "PL_SQL_To_ADLS_Incremental",
+	"properties": {
+		"parameters": {
+			"pSchemaName": {
+				"type": "string"
+			},
+			"pTableName": {
+				"type": "string"
+			},
+			"pContainer": {
+				"type": "string"
+			}
+		},
+		"annotations": []
+	}
+}

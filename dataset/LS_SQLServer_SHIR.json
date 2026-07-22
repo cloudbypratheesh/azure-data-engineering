@@ -1,0 +1,30 @@
+{
+	"name": "LS_SQLServer_SHIR",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SQLServer_SHIR",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"ds_SchemaName": {
+				"type": "string"
+			},
+			"ds_Tablename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().ds_SchemaName",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().ds_Tablename",
+				"type": "Expression"
+			}
+		}
+	}
+}
