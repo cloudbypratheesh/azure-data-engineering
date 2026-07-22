@@ -1,0 +1,27 @@
+{
+	"name": "DS_Binary_Source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_blob_dev_input_files",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"SRC_FileName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().SRC_FileName",
+					"type": "Expression"
+				},
+				"container": "files"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

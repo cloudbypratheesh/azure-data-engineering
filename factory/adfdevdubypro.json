@@ -1,0 +1,15 @@
+{
+	"name": "adfdevdubypro",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "5a826c45-375d-49c2-a2e8-e054860c0e2b",
+		"tenantId": "efcd8864-c241-4ef6-9204-f99abec6377d"
+	}
+}

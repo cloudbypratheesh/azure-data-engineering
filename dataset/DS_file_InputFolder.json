@@ -1,0 +1,19 @@
+{
+	"name": "DS_file_InputFolder",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_BlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "Incoming",
+				"container": "files"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
