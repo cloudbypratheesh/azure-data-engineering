@@ -1,0 +1,30 @@
+{
+	"name": "DS_SQL_AdventureDB",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SQLServer",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"DS_SQL_Schemaname": {
+				"type": "string"
+			},
+			"DS_SQL_TableName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().DS_SQL_Schemaname",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().DS_SQL_TableName",
+				"type": "Expression"
+			}
+		}
+	}
+}
