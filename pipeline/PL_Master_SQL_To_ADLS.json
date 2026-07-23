@@ -1,9 +1,9 @@
 {
-	"name": "PL_SQL_To_ADLS_Incremental",
+	"name": "PL_Master_SQL_To_ADLS",
 	"properties": {
 		"activities": [
 			{
-				"name": "LKP_GetWatermark",
+				"name": "LKP_GetActiveTables",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -17,42 +17,56 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": {
-							"value": "@concat(\n'SELECT LastProcessedID\nFROM dbo.WatermarkTable\nWHERE TableSchema = ''',\npipeline().parameters.PL_P_SchemaName,\n''' AND TableName = ''',\npipeline().parameters.PL_P_TableName,\n''''\n)",
-							"type": "Expression"
-						},
+						"sqlReaderStoredProcedureName": "[dbo].[usp_GetActiveTables]",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
+					"dataset": {
+						"referenceName": "DS_SQL_ETL_FRAMEWORK",
+						"type": "DatasetReference"
+					},
 					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "FE_LoadTables",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "LKP_GetActiveTables",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('LKP_GetActiveTables').output.value",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "EXE_Ingest_SQLTable_To_ADLS",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"policy": {
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "PL_Ingest_SQLTable_To_ADLS",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true
+							}
+						}
+					]
 				}
 			}
 		],
-		"parameters": {
-			"PL_P_SchemaName": {
-				"type": "string"
-			},
-			"PL_P_TableName": {
-				"type": "string"
-			},
-			"PL_P_ContainerName": {
-				"type": "string"
-			}
-		},
-		"variables": {
-			"PL_V_LastProcessedID": {
-				"type": "String"
-			},
-			"PL_V_MaxID": {
-				"type": "String"
-			},
-			"PL_V_FolderPath": {
-				"type": "String"
-			},
-			"PL_V_FileName": {
-				"type": "String"
-			}
-		},
 		"annotations": []
 	}
 }

@@ -1,0 +1,12 @@
+{
+	"name": "DS_SQL_ETL_FRAMEWORK",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SQL_ETL_FRAMEWORK",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": []
+	}
+}
