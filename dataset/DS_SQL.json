@@ -1,0 +1,30 @@
+{
+	"name": "DS_SQL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SQLServer",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"P_SchemaName": {
+				"type": "string"
+			},
+			"P_TableName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().P_SchemaName",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().P_TableName",
+				"type": "Expression"
+			}
+		}
+	}
+}

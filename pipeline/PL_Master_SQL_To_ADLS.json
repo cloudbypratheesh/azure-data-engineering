@@ -60,13 +60,67 @@
 									"referenceName": "PL_Ingest_SQLTable_To_ADLS",
 									"type": "PipelineReference"
 								},
-								"waitOnCompletion": true
+								"waitOnCompletion": true,
+								"parameters": {
+									"P_ConfigID": {
+										"value": "@item().ConfigID",
+										"type": "Expression"
+									},
+									"P_SourceSchema": {
+										"value": "@item().SourceSchema",
+										"type": "Expression"
+									},
+									"P_SourceTable": {
+										"value": "@item().SourceTable",
+										"type": "Expression"
+									},
+									"P_LoadType": {
+										"value": "@item().LoadType",
+										"type": "Expression"
+									},
+									"P_WatermarkColumn": {
+										"value": "@item().WatermarkColumn",
+										"type": "Expression"
+									},
+									"P_TargetLayer": {
+										"value": "@item().TargetLayer",
+										"type": "Expression"
+									},
+									"P_FileFormat": {
+										"value": "@item().FileFormat",
+										"type": "Expression"
+									}
+								}
 							}
 						}
 					]
 				}
 			}
 		],
+		"parameters": {
+			"P_ConfigID": {
+				"type": "string",
+				"defaultValue": "@item().ConfigID"
+			},
+			"P_SourceSchema": {
+				"type": "string"
+			},
+			"P_SourceTable": {
+				"type": "string"
+			},
+			"P_LoadType": {
+				"type": "string"
+			},
+			"P_WatermarkColumn": {
+				"type": "string"
+			},
+			"P_TargetLayer": {
+				"type": "string"
+			},
+			"P_FileFormat": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }

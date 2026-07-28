@@ -17,7 +17,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "EXEC usp_GetWatermark @ConfigID = @{pipeline().parameters.P_ConfigID}",
+						"sqlReaderQuery": {
+							"value": "@concat(\r\n'EXEC usp_GetWatermark @ConfigID = ',\r\nstring(pipeline().parameters.P_ConfigID)\r\n)",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -26,6 +29,111 @@
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": true
+				}
+			},
+			{
+				"name": "CPY_SQLTable_To_ADLS",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "SET_LastWatermark",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": {
+							"value": "@if(equals(pipeline().parameters.P_LoadType,'FULL'),\nconcat('Select * from ',pipeline().parameters.P_SourceSchema,'.',pipeline().parameters.P_SourceTable),\nconcat('Select * from ',pipeline().parameters.P_SourceSchema,'.',pipeline().parameters.P_SourceTable,' where ',pipeline().parameters.P_WatermarkColumn,'>',variables('V_LastWatermark'))\n)",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"P_SchemaName": {
+								"value": "@pipeline().parameters.P_SourceSchema",
+								"type": "Expression"
+							},
+							"P_TableName": {
+								"value": "@pipeline().parameters.P_SourceTable",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "LS_ADLS_SINK",
+						"type": "DatasetReference",
+						"parameters": {
+							"ADLS_SINK_FolderPath": {
+								"value": "@concat(pipeline().parameters.P_SourceSchema,'/',pipeline().parameters.P_SourceTable)",
+								"type": "Expression"
+							},
+							"ADLS_SINK_FileName": {
+								"value": "@concat(pipeline().parameters.P_SourceTable,'.parquet')",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "SET_LastWatermark",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "LKP_GetWatermark",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "V_LastWatermark",
+					"value": {
+						"value": "@string(activity('LKP_GetWatermark').output.firstRow.LastWatermark)",
+						"type": "Expression"
+					}
 				}
 			}
 		],
@@ -38,6 +146,23 @@
 			},
 			"P_SourceTable": {
 				"type": "string"
+			},
+			"P_LoadType": {
+				"type": "string"
+			},
+			"P_WatermarkColumn": {
+				"type": "string"
+			},
+			"P_TargetLayer": {
+				"type": "string"
+			},
+			"P_FileFormat": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"V_LastWatermark": {
+				"type": "String"
 			}
 		},
 		"annotations": []
