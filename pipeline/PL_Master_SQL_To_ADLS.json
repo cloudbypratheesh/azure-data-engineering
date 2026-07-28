@@ -102,6 +102,9 @@
 				"type": "String"
 			}
 		},
+		"folder": {
+			"name": "SQL_TO_ADLS"
+		},
 		"annotations": []
 	}
 }
