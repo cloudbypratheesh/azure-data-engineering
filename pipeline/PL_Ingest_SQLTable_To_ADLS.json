@@ -97,17 +97,11 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "LS_ADLS_SINK",
+						"referenceName": "DS_ADLS_Parquet",
 						"type": "DatasetReference",
 						"parameters": {
-							"ADLS_SINK_FolderPath": {
-								"value": "@concat(pipeline().parameters.P_SourceSchema,'/',pipeline().parameters.P_SourceTable)",
-								"type": "Expression"
-							},
-							"ADLS_SINK_FileName": {
-								"value": "@concat(pipeline().parameters.P_SourceTable,'.parquet')",
-								"type": "Expression"
-							}
+							"P_FolderPath": "@concat(pipeline().parameters.P_SourceSchema,'/',pipeline().parameters.P_SourceTable)",
+							"P_FileName": "@concat(pipeline().parameters.P_SourceTable,'.parquet')"
 						}
 					}
 				]
@@ -162,6 +156,9 @@
 		},
 		"variables": {
 			"V_LastWatermark": {
+				"type": "String"
+			},
+			"V_Test_ConfigID": {
 				"type": "String"
 			}
 		},
