@@ -50,6 +50,8 @@
 						{
 							"name": "EXE_Ingest_SQLTable_To_ADLS",
 							"type": "ExecutePipeline",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [],
 							"policy": {
 								"secureInput": false
@@ -97,30 +99,6 @@
 				}
 			}
 		],
-		"parameters": {
-			"P_ConfigID": {
-				"type": "string",
-				"defaultValue": "@item().ConfigID"
-			},
-			"P_SourceSchema": {
-				"type": "string"
-			},
-			"P_SourceTable": {
-				"type": "string"
-			},
-			"P_LoadType": {
-				"type": "string"
-			},
-			"P_WatermarkColumn": {
-				"type": "string"
-			},
-			"P_TargetLayer": {
-				"type": "string"
-			},
-			"P_FileFormat": {
-				"type": "string"
-			}
-		},
 		"annotations": []
 	}
 }
