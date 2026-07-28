@@ -50,8 +50,6 @@
 						{
 							"name": "EXE_Ingest_SQLTable_To_ADLS",
 							"type": "ExecutePipeline",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [],
 							"policy": {
 								"secureInput": false
@@ -99,6 +97,11 @@
 				}
 			}
 		],
+		"variables": {
+			"aaa": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }

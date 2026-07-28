@@ -18,7 +18,7 @@
 					"source": {
 						"type": "SqlServerSource",
 						"sqlReaderQuery": {
-							"value": "@concat(\r\n'EXEC usp_GetWatermark @ConfigID = ',\r\nstring(pipeline().parameters.P_ConfigID)\r\n)",
+							"value": "@concat(\n'EXEC usp_GetWatermark @ConfigID = ',\nstring(pipeline().parameters.P_ConfigID)\n)",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
